@@ -29,7 +29,7 @@ This project aims to assist in the early detection of breast cancer using a supe
 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/your-username/breast-cancer-predictor.git
+git clone https://github.com/juliuslaggah/breast-cancer-predictor.git
 cd breast-cancer-predictor
 ```
 
@@ -90,14 +90,14 @@ Then open the URL provided by Streamlit in your browser.
 <details>
 <summary>🔐 Login Page</summary>
 
-![Login Page](screenshots/login.png)
+![Login Page](assets/login.png)
 
 </details>
 
 <details>
 <summary>📊 Single Prediction</summary>
 
-![Single Prediction](screenshots/single_prediction.png)
+![Single Prediction](assets/newplot.png)
 
 </details>
 
@@ -121,11 +121,14 @@ The full project report is available [here](report/Breast_Cancer_Predictor_Repor
 
 ## 👥 Authors
 
-- Julius — Backend, Model Integration, Project Lead
-- [Other members] — UI, CSS, Testing, Report
+- Julius Laggah— Backend, Model Integration, Project Lead
+- Sadar Win
+-Adamsay Turay
+- Jusu Abdul Karim
+
 
 ---
 
 ## ✅ License
 
-This project is open-source and available under the MIT License.
+This project is open-source and available under the GPL v.3 License.

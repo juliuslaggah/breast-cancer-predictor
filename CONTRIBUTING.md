@@ -22,7 +22,7 @@ This is a Breast Cancer Diagnosis Predictor built using **Streamlit** and **Mach
 - Fork this repository to your GitHub account.
 - Clone it locally:
   ```bash
-  git clone https://github.com/your-username/breast-cancer-predictor.git
+  git clone https://github.com/juliuslaggah/breast-cancer-predictor.git
   cd breast-cancer-predictor
   ```
 
@@ -80,7 +80,7 @@ Harassment or discrimination of any kind will not be tolerated.
 
 ## 🧾 License
 
-This project is under the MIT License. See `LICENSE` for details.
+This project is under the GPL v.3 License. See `LICENSE` for details.
 
 ---
 
