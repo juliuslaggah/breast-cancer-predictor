@@ -1,0 +1,275 @@
+/* ========== Base Theme & Layout ========== */
+body, .stApp {
+  background-color: #0d1b2a;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+.stApp {
+  background-image: linear-gradient(
+      rgba(13, 27, 42, 0.9),
+      rgba(13, 27, 42, 0.9)
+  ), url("./logo.jpeg");
+  background-size: 60px;  /* Changed from 6px */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* ========== Typography & Headings ========== */
+h1, h2, h3, .stTitle {
+  color: #ffffff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  letter-spacing: -0.5px;
+}
+
+h1 {
+  border-bottom: 2px solid #415a77;
+  padding-bottom: 0.5rem;
+}
+
+/* ========== Sidebar Enhancements ========== */
+.css-1d391kg {
+  background-color: #1b263b !important;
+  border-right: 1px solid #415a77 !important;
+}
+
+.sidebar .sidebar-content {
+  backdrop-filter: blur(5px);
+}
+
+.stSlider {
+  margin: 1.2rem 0;
+}
+
+.stSlider:hover {
+  opacity: 0.9;
+  transition: opacity 0.2s ease-in;
+}
+
+/* ========== Diagnosis Display ========== */
+.diagnosis.benign {
+  background: linear-gradient(145deg, #01DB4B, #00b140);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 15px rgba(1, 219, 75, 0.2);
+}
+
+.diagnosis.malicious {
+  background: linear-gradient(145deg, #ff4b4b, #cc0000);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 15px rgba(255, 75, 75, 0.2);
+}
+
+/* ========== Custom Cards & Containers ========== */
+.stContainer {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid #415a77 !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem !important;
+}
+
+.stExpander {
+  border: 1px solid #415a77 !important;
+  border-radius: 8px !important;
+  margin: 1rem 0 !important;
+}
+
+/* ========== Interactive Elements ========== */
+.stButton>button {
+  transition: all 0.3s ease !important;
+  border-radius: 8px !important;
+}
+
+.stButton>button:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+}
+
+div[data-testid="stSidebar"] button:contains("Logout") {
+  background: linear-gradient(145deg, #ff4b4b, #cc0000);
+  color: white !important;
+  border: none !important;
+  width: 100%;
+  transition: all 0.3s ease !important;
+}
+
+div[data-testid="stSidebar"] button:contains("Logout"):hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(255,75,75,0.3) !important;
+}
+
+/* ========== Data Visualization ========== */
+.plotly-chart {
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.1);
+  padding: 1rem;
+}
+
+/* ========== Batch Processing ========== */
+.stStatus {
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid #415a77 !important;
+  border-radius: 8px !important;
+  backdrop-filter: blur(5px);
+}
+
+.stDataEditor {
+  background: rgba(255,255,255,0.03) !important;
+  border-radius: 8px !important;
+}
+
+/* ========== Custom Metrics ========== */
+[data-testid="stMetric"] {
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid #415a77 !important;
+  border-radius: 12px !important;
+  padding: 1.5rem !important;
+  backdrop-filter: blur(5px);
+}
+
+[data-testid="stMetricLabel"] {
+  font-size: 1.1rem !important;
+  color: #a8dadc !important;
+}
+
+[data-testid="stMetricValue"] {
+  font-size: 2rem !important;
+  color: #ffffff !important;
+}
+
+
+/* ========== Auth Page Essentials ========== */
+/* Main container */
+/* Auth container */
+.auth-container {
+  width: 100% !important;
+  display: flex !important;
+  gap: 3rem !important;
+  padding: 2rem !important;
+}
+
+/* Columns */
+.stHorizontalBlock {
+  flex: 1 !important;
+}
+/* Form container */
+div[data-testid="stForm"] {
+  background: #1b263b !important;
+  border: 2px solid #415a77 !important;
+  border-radius: 12px !important;
+  padding: 2rem !important;
+  width: 400px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.5rem !important;
+}
+
+/* Title */
+div:has(> .stMarkdown > h2:contains("🔐 Login or Register")) h2 {
+  color: #01DB4B !important;
+  font-size: 24px !important;
+  margin: 0 0 2rem 0 !important;
+  text-align: center !important;
+  letter-spacing: -0.5px;
+}
+
+/* Form elements container */
+div[data-testid="stVerticalBlock"]:has(div[data-testid="stForm"]) {
+  gap: 1.8rem !important;
+}
+
+/* Input containers */
+div[data-testid="stSelectbox"], 
+div[data-testid="stTextInput"] {
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+/* Labels */
+.stTextInput label,
+.stSelectbox label {
+  display: block !important;
+  color: #a8dadc !important;
+  font-size: 0.95rem !important;
+  margin-bottom: 0.5rem !important;
+  font-weight: 500 !important;
+}
+
+/* Input fields */
+.stTextInput>div>div>input,
+.stSelectbox>div>div>div>div {
+  background: #0d1b2a !important;
+  border: 1px solid #415a77 !important;
+  color: #ffffff !important;
+  
+  border-radius: 8px !important;
+  width: 100% !important;
+  transition: all 0.2s ease !important;
+}
+
+
+
+.stSelectbox div[role="option"] {
+  color: #ffffff !important;
+  padding: 14px 20px !important;
+  border-bottom: 1px solid #415a77 !important;
+  transition: all 0.2s ease !important;
+}
+
+.stSelectbox div[role="option"]:hover {
+  background: rgba(1, 219, 75, 0.1) !important;
+}
+
+.stSelectbox div[role="option"][aria-selected="true"] {
+  background: rgba(1, 219, 75, 0.15) !important;
+  border-left: 3px solid #01DB4B !important;
+}
+
+
+
+
+
+/* ========== END DROPDOWN FIX ========== */
+
+/* Submit button */
+div[data-testid="stFormSubmitButton"] button {
+  background: #01DB4B !important;
+  color: #0d1b2a !important;
+  font-weight: 600 !important;
+  width: 100% !important;
+  margin-top: 1.5rem !important;
+  padding: 14px 20px !important;
+  border-radius: 8px !important;
+  transition: transform 0.2s ease !important;
+}
+
+div[data-testid="stFormSubmitButton"] button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(1, 219, 75, 0.2) !important;
+}
+
+/* Focus states */
+.stTextInput>div>div>input:focus,
+.stSelectbox>div>div>div[role="button"]:focus {
+  border-color: #01DB4B !important;
+  box-shadow: 0 0 0 3px rgba(1, 219, 75, 0.15) !important;
+  outline: none !important;
+}
+
+/* Error message styling */
+.stAlert {
+  margin-top: 1rem !important;
+  border-radius: 8px !important;
+}
+
