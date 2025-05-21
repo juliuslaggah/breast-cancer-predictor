@@ -104,7 +104,7 @@ Then open the URL provided by Streamlit in your browser.
 <details>
 <summary>📁 Batch Prediction with CSV</summary>
 
-![Batch Prediction](screenshots/batch_prediction.png)
+![Batch Prediction](assets/batch_prediction.png)
 
 </details>
 
@@ -123,7 +123,7 @@ The full project report is available [here](report/Breast_Cancer_Predictor_Repor
 
 - Julius Laggah— Backend, Model Integration, Project Lead
 - Sadar Win
--Adamsay Turay
+- Adamsay Turay
 - Jusu Abdul Karim
 
 
@@ -132,3 +132,8 @@ The full project report is available [here](report/Breast_Cancer_Predictor_Repor
 ## ✅ License
 
 This project is open-source and available under the GPL v.3 License.
+
+[![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/streamlit-v1.18.1-orange)](https://streamlit.io/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
+
