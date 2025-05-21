@@ -121,7 +121,7 @@ The full project report is available [here](report/Breast_Cancer_Predictor_Repor
 
 ## 👥 Authors
 
-- Julius Laggah— Backend, Model Integration, Project Lead
+- Julius Laggah
 - Sadar Win
 - Adamsay Turay
 - Jusu Abdul Karim
