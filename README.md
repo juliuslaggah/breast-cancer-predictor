@@ -108,8 +108,6 @@ Then open the URL provided by Streamlit in your browser.
 
 </details>
 
-> You can add these images in a `screenshots` folder inside your repo.
-
 ---
 
 ## 📄 Report
@@ -122,7 +120,7 @@ The full project report is available [here](report/Breast_Cancer_Predictor_Repor
 ## 👥 Authors
 
 - Julius Laggah
-- Sadar Win
+- Sandar Win
 - Adamsay Turay
 - Jusu Abdul Karim
 

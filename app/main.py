@@ -5,6 +5,10 @@ import plotly.graph_objects as go
 import numpy as np
 from utils import login_user, logout_user
 from pathlib import Path
+from dicom import load_dicom_series, segment_volume, plot_slice_mask, compute_mask_features
+
+
+
 
 # ------------------- CONSTANTS ------------------- #
 SLIDER_LABELS = [
@@ -99,7 +103,7 @@ else:
 def get_clean_data():
     data_file = Path(__file__).parent.parent / "data/data.csv"
     data = pd.read_csv(data_file)
-    data = data.drop(['Unnamed: 32', 'id'], axis=1)
+    data = data.drop(['Unnamed: 32'], axis=1)
     data['diagnosis'] = data['diagnosis'].map({'M': 1, 'B': 0})
     return data
 
@@ -146,6 +150,8 @@ MEDICAL_PLAUSIBLE_RANGES = {
 
 
 def add_sidebar():
+
+    st.sidebar.header("Cell Nuclei Measurement")
     
     manual_mode = st.sidebar.checkbox(
         "🖥️ Switch to Manual Input", 
@@ -153,7 +159,6 @@ def add_sidebar():
         help="Enter exact values instead of using sliders"
     )
     
-    st.sidebar.header("Cell Nuclei Measurements")
     data = get_clean_data()
     input_dict = {}
 
@@ -191,8 +196,16 @@ def add_sidebar():
                 value=float(data[key].mean()),
                 key=f"slider_{key}"
             )
+    # Add separator
+    st.sidebar.markdown("---")
+    # DICOM CONTROLS
+    st.sidebar.header("📂 DICOM Image Segmentation")
+    dicom_folder = st.sidebar.text_input("🔍 Folder path to DICOMs", "")
+    segment_method = st.sidebar.selectbox("Segmentation method", ["otsu"], index=0)
+    slice_idx = st.sidebar.number_input("🧠 Slice index", min_value=0, value=0, step=1)
+    
 
-    return input_dict
+    return input_dict, dicom_folder, segment_method, slice_idx
 
 
 
@@ -284,16 +297,35 @@ def get_radar_chart(input_data):
     
     return fig
 
-def add_predictions(input_data):
+def add_predictions(input_data, imaging_features: dict = None):
     
-    model_path = Path(__file__).parent.parent / "model/model.pkl"
-    scaler_path = Path(__file__).parent.parent / "model/scaler.pkl"
+    if imaging_features is None:
+        model_path = Path(__file__).parent.parent / "model/model_v1.pkl"
+        scaler_path = Path(__file__).parent.parent / "model/scaler_v1.pkl"
+        
+        feats = input_data.copy()
+        
+    else:
+        model_path = Path(__file__).parent.parent / "model/model_v2.pkl"
+        scaler_path = Path(__file__).parent.parent / "model/scaler_v2.pkl"
+        
+        feats = {**input_data, **imaging_features}
+
     
     model = pickle.load(open(model_path, "rb"))
     scaler = pickle.load(open(scaler_path, "rb"))
     
+    vals = [feats[k] for (_, k) in SLIDER_LABELS]
+    if imaging_features is not None:
+        vals += [
+            feats["volume_cm3"],
+            feats["mean_area_px"],
+            feats["surface_area_cm2"],
+        ]
+    
+    
 
-    input_array = np.array(list(input_data.values())).reshape(1, -1)
+    input_array = np.array(vals).reshape(1, -1)
     input_array_scaled = scaler.transform(input_array)
 
     prediction = model.predict(input_array_scaled)
@@ -351,6 +383,11 @@ def add_predictions(input_data):
     st.metric("Malignant Probability", f"{probabilities[1]:.2%}")
     
     st.caption("This tool assists medical professionals but should not replace professional diagnosis.")
+    
+    
+    
+    
+    
 
 def batch_prediction_section():
     st.divider()
@@ -362,68 +399,70 @@ def batch_prediction_section():
         accept_multiple_files=False
     )
 
-    if uploaded_file:
-        try:
+    if not uploaded_file:
+        return 
+    try:
             # Read and clean data first
-            batch_data = pd.read_csv(uploaded_file)
+        batch_data = pd.read_csv(uploaded_file)
             
             
             # Drop unnecessary columns if they exist
-            batch_data = batch_data.drop(columns=['id', 'Unnamed: 32'], errors='ignore')
+        batch_data = batch_data.drop(columns=['id, Unnamed: 32'], errors='ignore')
             
             # Get required features from slider labels
-            required_cols = [key for (label, key) in SLIDER_LABELS]
+        required_cols = [key for (label, key) in SLIDER_LABELS]
             
             # Validate columns
-            missing_cols = set(required_cols) - set(batch_data.columns)
-            if missing_cols:
-                st.error(f"Missing required columns: {', '.join(missing_cols)}")
-                return
+        missing_cols = set(required_cols) - set(batch_data.columns)
+        if missing_cols:
+            st.error(f"Missing required columns: {', '.join(missing_cols)}")
+            return
 
             # Load model and scaler
-            model_path = Path(__file__).parent.parent / "model/model.pkl"
-            scaler_path = Path(__file__).parent.parent / "model/scaler.pkl"
+        model_path = Path(__file__).parent.parent / "model/model_v1.pkl"
+        scaler_path = Path(__file__).parent.parent / "model/scaler_v1.pkl"
             
-            model = pickle.load(open(model_path, "rb"))
-            scaler = pickle.load(open(scaler_path, "rb"))
+        model = pickle.load(open(model_path, "rb"))
+        scaler = pickle.load(open(scaler_path, "rb"))
 
             # Scale the data using the same scaler
-            scaled_data = scaler.transform(batch_data[required_cols])
+        scaled_data = scaler.transform(batch_data[required_cols])
             
             # Make predictions
-            predictions = model.predict(scaled_data)
-            probabilities = model.predict_proba(scaled_data)
+        predictions = model.predict(scaled_data)
+        probabilities = model.predict_proba(scaled_data)
 
             # Create clean results dataframe
-            results = batch_data[required_cols].copy()
-            results['Prediction'] = ['Benign' if p == 0 else 'Malignant' for p in predictions]
-            results['Benign Probability'] = probabilities[:, 0]
-            results['Malignant Probability'] = probabilities[:, 1]
+        results = batch_data[required_cols].copy()
+        results['Prediction'] = ['Benign' if p == 0 else 'Malignant' for p in predictions]
+        results['Benign Probability'] = probabilities[:, 0]
+        results['Malignant Probability'] = probabilities[:, 1]
 
             # Format and display results
-            st.dataframe(results.style.format({
+        st.dataframe(results.style.format({
                 'Benign Probability': '{:.2%}',
                 'Malignant Probability': '{:.2%}'
             }))
 
             # Create clean download CSV
-            csv = results.to_csv(index=False).encode('utf-8')
-            st.download_button(
+        csv = results.to_csv(index=False).encode('utf-8')
+        st.download_button(
                 "Download Predictions",
                 data=csv,
                 file_name="cancer_predictions.csv",
                 mime="text/csv"
             )
 
-        except Exception as e:
-            st.error(f"Error processing file: {str(e)}")
+    except Exception as e:
+        st.error(f"Error processing file: {str(e)}")
             
 # ------------------- MAIN APP ------------------- #
 def main():
     if not st.session_state.authenticated:
         return
 
-    input_data = add_sidebar()
+    input_data, dicom_folder, segment_method, slice_idx = add_sidebar()
+
 
     # Main content container
     with st.container():
@@ -446,6 +485,35 @@ def main():
     
     # Batch predictions section
     batch_prediction_section()
+    
+    
+    
+    # ✅ DICOM Image Visualization Section
+    if dicom_folder:
+        st.subheader("DICOM Image Segmentation Viewer")
+
+        try:
+            volume = load_dicom_series(dicom_folder)
+            mask = segment_volume(volume, method=segment_method)
+            fig = plot_slice_mask(volume, mask, slice_index=slice_idx)
+            st.pyplot(fig)
+            
+            
+            img_feats = compute_mask_features(volume, mask, voxel_spacing=(1, 1, 1))
+            with st.expander("🧮 Imaging Quantitative Features"):
+                st.metric("Volume (cm³)",    f"{img_feats['volume_cm3']:.2f}")
+                st.metric("Mean Area (px)",  f"{img_feats['mean_area_px']:.2f}")
+                st.metric("Surface Area (cm²)", f"{img_feats['surface_area_cm2']:.2f}")
+                
+                st.markdown("---")
+                st.markdown("## Combined Cytology + Imaging Prediction")
+                add_predictions(input_data, imaging_features=img_feats)
+            
+        except Exception as e:
+            st.error(f"❌ Error processing DICOM: {e}")
+    
+    
+    
 
 if __name__ == "__main__":
     main()

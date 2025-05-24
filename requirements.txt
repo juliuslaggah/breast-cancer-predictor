@@ -1,7 +1,11 @@
-numpy==1.24.4           # newer, compatible with pandas & scikit-learn
-pandas==1.5.3           # bugfix release of 1.5.x series, more stable
-plotly==5.11.0          # ok
-scikit-learn==1.2.2     # ok
-streamlit==1.18.1       # ok
-altair<5.0.0            # ok
-plotly==5.11.0
+streamlit>=1.25
+scikit-learn>=1.0
+pandas>=1.3
+numpy
+plotly
+scikit-image
+pydicom
+pylibjpeg
+pylibjpeg-libjpeg
+gdcm
+...
