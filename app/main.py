@@ -300,8 +300,8 @@ def get_radar_chart(input_data):
 def add_predictions(input_data, imaging_features: dict = None):
     
     if imaging_features is None:
-        model_path = Path(__file__).parent.parent / "model/model_v1.pkl"
-        scaler_path = Path(__file__).parent.parent / "model/scaler_v1.pkl"
+        model_path = Path(__file__).parent.parent / "model/model_v3.pkl"
+        scaler_path = Path(__file__).parent.parent / "model/scaler_v3.pkl"
         
         feats = input_data.copy()
         
@@ -419,8 +419,8 @@ def batch_prediction_section():
             return
 
             # Load model and scaler
-        model_path = Path(__file__).parent.parent / "model/model_v1.pkl"
-        scaler_path = Path(__file__).parent.parent / "model/scaler_v1.pkl"
+        model_path = Path(__file__).parent.parent / "model/model_v3.pkl"
+        scaler_path = Path(__file__).parent.parent / "model/scaler_v3.pkl"
             
         model = pickle.load(open(model_path, "rb"))
         scaler = pickle.load(open(scaler_path, "rb"))
@@ -471,6 +471,11 @@ def main():
         Clinical decision support tool for breast mass cytology analysis. 
         Adjust measurements using the sidebar sliders to get real-time predictions.
         """)
+        
+        
+    
+    
+    
 
     # Columns layout
     col1, col2 = st.columns([4, 1], gap="large")
