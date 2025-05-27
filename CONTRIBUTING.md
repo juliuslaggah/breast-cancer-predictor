@@ -8,11 +8,14 @@ We welcome contributions to improve this project! Whether it's a bug fix, new fe
 ## 🧠 Project Overview
 
 This is a Breast Cancer Diagnosis Predictor built using **Streamlit** and **Machine Learning**. It includes features like:
-- Real-time single prediction
-- Batch prediction from CSV
-- Login & registration system
-- Interactive UI with dark theme and professional layout
-- Visualizations and explainable predictions (coming soon)
+- **Manual Input** (cytology features via sliders)
+- **Batch Prediction** (upload CSV)
+- **DICOM Image Segmentation & Quantitative Features**
+- **Dual-Model Architecture** (cytology-only & combined cytology+DICOM)
+- **User Authentication** (Login / Register / Forgot Password)
+- **Calibrated Probabilities** to avoid over-confidence
+- **Dark-themed UI** with custom CSS
+
 
 ---
 
@@ -43,7 +46,7 @@ git checkout -b fix-login-bug
   ```bash
   streamlit run app/main.py
   ```
-- Test login/register, CSV uploads, and predictions.
+- Test login/register, CSV uploads or dicom, and predictions.
 
 ### 5. Commit Changes
 ```bash
