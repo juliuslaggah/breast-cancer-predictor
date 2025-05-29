@@ -30,8 +30,7 @@ An end-to-end web application for predicting breast cancer using machine learnin
    - Streamlit sliders for 30 cytology features  
    - CSV uploader for batch runs  
    - Real-time radar chart of input features  
-2. **Dual Models**  
-   - **v1**: Logistic Regression on cytology only (`model_v1.pkl`)  
+2. **Dual Models**    
    - **v2**: Cytology + imaging features from segmented DICOM (`model_v2.pkl`)  
    - **v3**: Calibrated cytology-only model with `CalibratedClassifierCV` (`model_v3.pkl`)  
 3. **DICOM Integration**  
@@ -155,7 +154,6 @@ Then open the URL provided by Streamlit in your browser.
 ## 📄 Report
 
 The full project report is available [here](report/Breast_Cancer_Predictor_Report.pdf)  
-> _(Ensure you upload the Word file inside a `report/` folder in the repository)_
 
 ---
 
