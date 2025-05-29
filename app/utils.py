@@ -62,7 +62,7 @@ def login_user():
     if st.session_state.get("authenticated"):
         return True
 
-    st.subheader("🔐 Login / Register / Reset Password")
+    st.subheader("🔐 Login or Register")
     action = st.selectbox("Choose action", ["Login", "Register", "Forgot Password"], key="auth_action")
 
     with st.form("auth_form", clear_on_submit=True):
