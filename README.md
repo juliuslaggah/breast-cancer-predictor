@@ -154,7 +154,8 @@ Then open the URL provided by Streamlit in your browser.
 
 ## 📄 Report
 
-The full project report is available [here](Report/Breast CancerApp Report.pdf) 
+The full project report is available [here](report/Breast_Cancer_Predictor_Report.pdf)  
+> _(Ensure you upload the Word file inside a `report/` folder in the repository)_
 
 ---
 
